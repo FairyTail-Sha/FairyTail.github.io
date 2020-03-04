@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Sharif Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="个人博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Sharif Blog">
+<meta property="og:url" content="https://sharif-d.github.io/page/3/index.html">
+<meta property="og:site_name" content="Sharif Blog">
+<meta property="og:description" content="个人博客">
+<meta property="og:locale" content="C#">
+<meta property="article:author" content="dingxuehao">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <!-- <div id="banner"></div> -->
+  <!-- Begin 使用龙女仆 -->
+  <div id="dragon"></div>
+  <!-- End 使用龙女仆 -->
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Sharif Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://sharif-d.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-DLL使用概述" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/13/DLL%E4%BD%BF%E7%94%A8%E6%A6%82%E8%BF%B0/" class="article-date">
+  <time datetime="2019-03-13T07:45:55.000Z" itemprop="datePublished">2019-03-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/13/DLL%E4%BD%BF%E7%94%A8%E6%A6%82%E8%BF%B0/">DLL使用概述</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><em>最近在一直做C#桌面绘图软件的算法并行优化，最后发现C#就是那样适合业务逻辑，<br>和界面的开发，很多高效的计算需要借助混合编程，充分使用各种语言的优势</em></p>
+<h1 id="DLL概述"><a href="#DLL概述" class="headerlink" title="DLL概述"></a>DLL概述</h1><p>先放代码，然后一点点解释【也是网络上查的，总结】</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// dllTest.h</span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">"C"</span> _declspec(dllexport) <span class="function"><span class="keyword">int</span> __stdcall <span class="title">test01</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b, <span class="keyword">int</span> c)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// dllTest.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stdafx.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"CreateDll.h"</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> __stdcall <span class="title">test01</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b,<span class="keyword">int</span> c)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a + b + c;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="extern-quot-C-quot"><a href="#extern-quot-C-quot" class="headerlink" title="extern &quot;C&quot;"></a><code>extern &quot;C&quot;</code></h2><p>extern “C”说明导出函数使用C编译器，则函数名遵循C编译器的函数名修饰规则，<br>不加extern “C”说明使用C++编译器的函数名修饰规则，两种规则区别如下：  </p>
+<ul>
+<li><p>（1）C编译器的函数名修饰规则<br>对于<code>__stdcall</code>调用约定，编译器和链接器会在输出函数名前加上一个下划线前缀，函数名后面加上一个“@”符号和其参数的字节数，例如<code>_functionname@number</code>。<code>__cdecl</code>调用约定仅在输出函数名前加上一个下划线前缀，例如<code>_functionname</code>。<code>__fastcall</code>调用约定在输出函数名前加上一个“@”符号，后面也是一个“@”符号和其参数的字节数，例如<code>@functionname@number</code></p>
+</li>
+<li><p>（2）C++编译器的函数名修饰规则<br>C++的函数名修饰规则有些复杂，但是信息更充分，通过分析修饰名不仅能够知道函数的调用方式，返回值类型，甚至参数个数、参数类型。不管<code>__cdecl</code>，<code>__fastcall</code>还是<code>__stdcall</code>调用方式，函数修饰都是以一个“?”开始，后面紧跟函数的名字，再后面是参数表的开始标识和按照参数类型代号拼出的参数表。对于<code>__stdcall</code>方式，参数表的开始标识是“@@YG”，对于<code>__cdecl</code>方式则是“@@YA”，对于<code>__fastcall</code>方式则是“@@YI”。</p>
+</li>
+</ul>
+<p>C++编译时函数名修饰约定规则：</p>
+<p> __stdcall调用约定：  </p>
+<p> 1、以”?”标识函数名的开始，后跟函数名；</p>
+<p> 2、函数名后面以”@@YG”标识参数表的开始，后跟参数表；</p>
+<p> 3、参数表以代号表示： </p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>X</td>
+<td>void</td>
+</tr>
+<tr>
+<td>D</td>
+<td>char</td>
+</tr>
+<tr>
+<td>E</td>
+<td>unsigned char</td>
+</tr>
+<tr>
+<td>F</td>
+<td>short</td>
+</tr>
+<tr>
+<td>H</td>
+<td>int</td>
+</tr>
+<tr>
+<td>I</td>
+<td>unsigned int</td>
+</tr>
+<tr>
+<td>J</td>
+<td>long</td>
+</tr>
+<tr>
+<td>K</td>
+<td>unsigned long</td>
+</tr>
+<tr>
+<td>M</td>
+<td>float</td>
+</tr>
+<tr>
+<td>N</td>
+<td>double</td>
+</tr>
+<tr>
+<td>_N</td>
+<td>bool</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody></table>
+<p> PA–表示指针，后面的代号表明指针类型，如果相同类型的指针连续出现，以”0”代替，一个”0”代表一次重复</p>
+<p>4、参数表的第一项为该函数的返回值类型，其后依次为参数的数据类型,指针标识在其所指数据类型前；</p>
+<p>5、参数表后以”@Z”标识整个名字的结束，如果该函数无参数，则以”Z”标识结束。</p>
+<pre><code>其格式为&quot;?functionname@@YG*****@Z&quot;或&quot;?functionname@@YG*XZ&quot;，例如    
+int Test1(char *var1, unsigned long)-----?Test1@@YGHPADK@Z
+
+void Test2()-----&quot;?Test2@@YGXXZ&quot; </code></pre><p>__cdecl调用约定:</p>
+<p>规则同上面的_stdcall调用约定，只是参数表的开始标识由上面的”@@YG”变为”@@YA”。</p>
+<p>__fastcall调用约:</p>
+<p>规则同上面的_stdcall调用约定，只是参数表的开始标识由上面的”@@YG”变为”@@YI”。</p>
+<table>
+<thead>
+<tr>
+<th>C++</th>
+<th>描述</th>
+<th>C#</th>
+<th>描述</th>
+<th>字节数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>char</td>
+<td>字符</td>
+<td>sbyte</td>
+<td>字节</td>
+<td>1</td>
+</tr>
+<tr>
+<td>usigned char</td>
+<td>无符号字符</td>
+<td>byte</td>
+<td>字节</td>
+<td>1</td>
+</tr>
+<tr>
+<td>wchar_t</td>
+<td>无符号字符</td>
+<td>char</td>
+<td>字符</td>
+<td>2</td>
+</tr>
+<tr>
+<td>bool</td>
+<td>布尔值</td>
+<td>byte</td>
+<td>字节</td>
+<td>1</td>
+</tr>
+<tr>
+<td>short</td>
+<td>短整型</td>
+<td>short</td>
+<td>短整型</td>
+<td>2</td>
+</tr>
+<tr>
+<td>unsigned short</td>
+<td>无符号短整型</td>
+<td>ushort</td>
+<td>无符号短整型</td>
+<td>2</td>
+</tr>
+<tr>
+<td>int</td>
+<td>整型</td>
+<td>int</td>
+<td>整型</td>
+<td>4</td>
+</tr>
+<tr>
+<td>unsigned int</td>
+<td>无符号整型</td>
+<td>uint</td>
+<td>无符号整型</td>
+<td>4</td>
+</tr>
+<tr>
+<td>long</td>
+<td>长整型</td>
+<td>int</td>
+<td>整型</td>
+<td>4</td>
+</tr>
+<tr>
+<td>unsigned long</td>
+<td>无符号长整型</td>
+<td>uint</td>
+<td>无符号整型</td>
+<td>4</td>
+</tr>
+<tr>
+<td>float</td>
+<td>单精度浮点数</td>
+<td>float</td>
+<td>单精度浮点数</td>
+<td>4</td>
+</tr>
+<tr>
+<td>double</td>
+<td>双精度浮点数</td>
+<td>double</td>
+<td>双精度浮点数</td>
+<td>8</td>
+</tr>
+<tr>
+<td>long double</td>
+<td>长双精度浮点数</td>
+<td>decimal</td>
+<td>–</td>
+<td>long double-8 decimal-10</td>
+</tr>
+</tbody></table>
+<h1 id="调用-DLL-函数"><a href="#调用-DLL-函数" class="headerlink" title="调用 DLL 函数"></a>调用 DLL 函数</h1><p><a href="https://docs.microsoft.com/zh-cn/dotnet/framework/interop/calling-a-dll-function" target="_blank" rel="noopener">https://docs.microsoft.com/zh-cn/dotnet/framework/interop/calling-a-dll-function</a></p>
+<p>从平台调用返回的结构必须是在托管代码和非托管代码中表示形式相同的数据类型。 </p>
+<p>这些类型称为 <strong>blittable 类型</strong>，因为它们不需要转换（请参阅 Blittable 类型和非 Blittable 类型）。 </p>
+<p>若要调用返回类型为 non-blittable 结构的函数，可定义与 non-blittable 类型大小相同的 blittable 帮助程序类型，并在函数返回后转换数据。</p>
+<p>以下 System 命名空间中的类型即是 <strong>blittable 类型</strong>：</p>
+<ul>
+<li>System.Byte</li>
+<li>System.SByte</li>
+<li>System.Int16</li>
+<li>System.UInt16</li>
+<li>System.Int32</li>
+<li>System.UInt32</li>
+<li>System.Int64</li>
+<li>System.UInt64</li>
+<li>System.IntPtr</li>
+<li>System.UIntPtr</li>
+<li>System.Single</li>
+<li>System.Double</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Non-blittable  类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>System.Array</td>
+<td>转换为 C 样式数组或 SAFEARRAY。</td>
+</tr>
+<tr>
+<td>System.Boolean</td>
+<td>转换为 1、2 或 4 字节的值，true 表示 1 或 -1。</td>
+</tr>
+<tr>
+<td>System.Char</td>
+<td>转换为 Unicode 或 ANSI 字符。</td>
+</tr>
+<tr>
+<td>System.Class</td>
+<td>转换为类接口。</td>
+</tr>
+<tr>
+<td>System.Object</td>
+<td>转换为变量或接口。</td>
+</tr>
+<tr>
+<td>System.Mdarray</td>
+<td>转换为 C 样式数组或 SAFEARRAY。</td>
+</tr>
+<tr>
+<td>System.String</td>
+<td>转换为空引用中的终止字符串或转换为 BSTR。</td>
+</tr>
+<tr>
+<td>System.Valuetype</td>
+<td>转换为具有固定内存布局的结构。</td>
+</tr>
+<tr>
+<td>System.Szarray</td>
+<td>转换为 C 样式数组或 SAFEARRAY。</td>
+</tr>
+</tbody></table>
+<p>传递结构</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://sharif-d.github.io/2019/03/13/DLL%E4%BD%BF%E7%94%A8%E6%A6%82%E8%BF%B0/" data-id="ck7d7ypkt0005s8hzdquyhok8" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C-%E6%B7%B7%E5%90%88%E7%BC%96%E7%A8%8B/" rel="tag">C++ 混合编程</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-EF + MySql 连接" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/02/02/EF%20+%20MySql%20%E8%BF%9E%E6%8E%A5/" class="article-date">
+  <time datetime="2019-02-01T16:00:00.000Z" itemprop="datePublished">2019-02-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/02/EF%20+%20MySql%20%E8%BF%9E%E6%8E%A5/">EF + MySql 连接</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>标签（空格分隔）： mysql ef 数据库操作</p>
+<hr>
+<h2 id="MySql-数据库连接"><a href="#MySql-数据库连接" class="headerlink" title="MySql 数据库连接"></a>MySql 数据库连接</h2><h3 id="Question1：配置问题"><a href="#Question1：配置问题" class="headerlink" title="Question1：配置问题"></a>Question1：配置问题</h3></h3><p>某人的建议：<strong>坑</strong></p>
+<blockquote>
+<p>当前配置</p>
+</blockquote>
+<ol>
+<li>Nuget包</li>
+<li>EF 6.0.0</li>
+<li>Mysql.Data 6.9.12</li>
+<li>Mysql.Data.Entity 6.9.12</li>
+</ol>
+<blockquote>
+<p>电脑配置<br> 安装mysql-connector-net-6.9.12<br> <em>这个版本最好要低于，Vs2017安装的mysql.data.dll版本，这个文件的目录位于<br> <code>C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\PrivateAssemblies</code></em></p>
+</blockquote>
+<p>警告： 谁说的，不要在乎这个问题，胡说八道，折磨死我了</p>
+<blockquote>
+<p>成功配置如下<br>安装的MySql版本为5.7<br>安装mysql connect net 6.10.8<br>Nuget添加包，有Mysql的data与data.Entity 6.10.8<br>版本号一致，即可处理</p>
+</blockquote>
+<p>出现的各种问题：<br>“MySql.Data.MySqlClient.MySqlConnection.get_Settings()”失败。”<br>我目前出现的问题，配置失败占百分之八十<br>另外SSL问题<br>找到Web.config文件，修改connectionStrings，添加SslMode=none即可</p>
+<p>PS：都是坑啊</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://sharif-d.github.io/2019/02/02/EF%20+%20MySql%20%E8%BF%9E%E6%8E%A5/" data-id="ck7d7ypkw000as8hz4uiacty2" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql-ef/" rel="tag">mysql ef</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/2/">&amp;laquo; 上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/4/">下一页 &amp;raquo;</a>
+  </nav>
+
+</section>
+        
+        <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-%E6%A1%8C%E9%9D%A2%E5%BC%80%E5%8F%91/" rel="tag">C# 桌面开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-%E6%B7%B7%E5%90%88%E7%BC%96%E7%A8%8B/" rel="tag">C++ 混合编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GPU-C/" rel="tag">GPU C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCL/" rel="tag">OpenCL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCl/" rel="tag">OpenCl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angular/" rel="tag">angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo-blog-nodejs/" rel="tag">hexo blog nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql-ef/" rel="tag">mysql ef</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/winforms-C/" rel="tag">winforms C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0-%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE/" rel="tag">数据库系统概述 思维导图</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/03/04/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/">数据库系统概述</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/04/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/15/Windows-Desktop-Apps/">Windows Desktop Apps</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/14/Windows-%E7%AA%97%E4%BD%93%E4%B8%AD%E7%9A%84%E4%BA%8B%E4%BB%B6%E9%A1%BA%E5%BA%8F/">Windows 窗体中的事件顺序</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/13/DLL%E4%BD%BF%E7%94%A8%E6%A6%82%E8%BF%B0/">DLL使用概述</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 dingxuehao<br>
+      支持来自 <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+
+</html>

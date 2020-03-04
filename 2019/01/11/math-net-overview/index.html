@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>math.net overview | Sharif Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="math.netMath.NET Numerics is an opensource numerical library for .Net.Math.NET初衷是开源建立一个稳定并持续维护的先进的基础数学工具箱，以满足.NET开发者的日常需求。 Math.NET NumericsMath.NET Numerics是核心功能是数值计算。主要是提供日常科学工程计算相关的算法，包括一些特殊函数，线性代数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="math.net overview">
+<meta property="og:url" content="https://sharif-d.github.io/2019/01/11/math-net-overview/index.html">
+<meta property="og:site_name" content="Sharif Blog">
+<meta property="og:description" content="math.netMath.NET Numerics is an opensource numerical library for .Net.Math.NET初衷是开源建立一个稳定并持续维护的先进的基础数学工具箱，以满足.NET开发者的日常需求。 Math.NET NumericsMath.NET Numerics是核心功能是数值计算。主要是提供日常科学工程计算相关的算法，包括一些特殊函数，线性代数">
+<meta property="og:locale" content="C#">
+<meta property="article:published_time" content="2019-01-11T05:44:53.000Z">
+<meta property="article:modified_time" content="2019-11-21T14:53:22.000Z">
+<meta property="article:author" content="dingxuehao">
+<meta name="twitter:card" content="summary">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <!-- <div id="banner"></div> -->
+  <!-- Begin 使用龙女仆 -->
+  <div id="dragon"></div>
+  <!-- End 使用龙女仆 -->
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Sharif Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://sharif-d.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-math-net-overview" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/11/math-net-overview/" class="article-date">
+  <time datetime="2019-01-11T05:44:53.000Z" itemprop="datePublished">2019-01-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      math.net overview
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>math.net<br>Math.NET Numerics is an opensource numerical library for .Net.<br>Math.NET初衷是开源建立一个稳定并持续维护的先进的基础数学工具箱，以满足.NET开发者的日常需求。</p>
+<p>Math.NET Numerics<br>Math.NET Numerics是核心功能是数值计算。主要是提供日常科学工程计算相关的算法，包括一些特殊函数，线性代数，概率论，随机函数，微积分，插值，最优化等相关计算功能。</p>
+<p>目前项目涉及到的计算仅有矩阵相关的，另外尝试使用其中的与BLAS相结合的内容</p>
+<p>Math.NET Spatial<br>Math.NET Spatial旨在成为.Net和Mono的几何库。</p>
+<p>dense matrix 密集矩阵</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">MathNet.Numerics.LinearAlgebra CreateMatrix</span><br><span class="line">Public Static Functions</span><br><span class="line">    Matrix&lt;T&gt; Dense&lt;T&gt;(<span class="keyword">int</span> rows, <span class="keyword">int</span> columns, T[] storage)</span><br><span class="line">    <span class="comment">//Create a new dense matrix with the given number of rows and columns directly binding to a raw array. The array is assumed to be in column-major order (column by column) and is used directly without copying. Very efficient, but changes to the array and the matrix will affect each other.</span></span><br><span class="line">    Matrix&lt;T&gt; Dense&lt;T&gt;(<span class="keyword">int</span> rows, <span class="keyword">int</span> columns, Func&lt;<span class="keyword">int</span>, <span class="keyword">int</span>, T&gt; init)</span><br><span class="line">    <span class="comment">//Create a new dense matrix and initialize each value using the provided init function.</span></span><br><span class="line">    Matrix&lt;T&gt; Dense&lt;T&gt;(<span class="keyword">int</span> rows, <span class="keyword">int</span> columns, T <span class="keyword">value</span>)</span><br><span class="line">    <span class="comment">//Create a new dense matrix and initialize each value to the same provided value.</span></span><br><span class="line">    Matrix&lt;T&gt; Dense&lt;T&gt;(<span class="keyword">int</span> rows, <span class="keyword">int</span> columns)</span><br><span class="line">    <span class="comment">//Create a new dense matrix with the given number of rows and columns. All cells of the matrix will be initialized to zero. Zero-length matrices are not supported.</span></span><br><span class="line">    Matrix&lt;T&gt; Dense&lt;T&gt;(DenseColumnMajorMatrixStorage&lt;T&gt; storage)</span><br><span class="line">    <span class="comment">//Create a new dense matrix straight from an initialized matrix storage instance. The storage is used directly without copying. Intended for advanced scenarios where you're working directly with storage for performance or interop reasons.</span></span><br><span class="line">    <span class="comment">//直接从初始化的矩阵存储实例创建一个新的密集矩阵。存储直接使用, 无需复制。适用于高级方案, 在这些方案中, 您直接使用存储以获得性能或互操作的原因。</span></span><br><span class="line"></span><br><span class="line">    Matrix&lt;T&gt; DenseDiagonal&lt;T&gt;(<span class="keyword">int</span> rows, <span class="keyword">int</span> columns, Func&lt;<span class="keyword">int</span>, T&gt; init)</span><br><span class="line">    <span class="comment">// 对角矩阵 Create a new diagonal dense matrix and initialize each diagonal value using the provided init function.</span></span><br></pre></td></tr></table></figure>
+
+<p>定义非零元素的总数比上矩阵所有元素的总数为矩阵的稠密度。<br>在矩阵中，若数值为0的元素数目远远多于非0元素的数目，并且非0元素分布没有规律时，则称该矩阵为稀疏矩阵；与之相反，若非0元素数目占大多数时，则称该矩阵为稠密矩阵。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://sharif-d.github.io/2019/01/11/math-net-overview/" data-id="ck7d7ypl2000is8hz6nq27qgh" class="article-share-link">分享</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/01/19/Java%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Java线程安全
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/01/11/Hexo-overview/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Hexo overview</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+        <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-%E6%A1%8C%E9%9D%A2%E5%BC%80%E5%8F%91/" rel="tag">C# 桌面开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/C-%E6%B7%B7%E5%90%88%E7%BC%96%E7%A8%8B/" rel="tag">C++ 混合编程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GPU-C/" rel="tag">GPU C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java/" rel="tag">Java</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCL/" rel="tag">OpenCL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenCl/" rel="tag">OpenCl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angular/" rel="tag">angular</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo-blog-nodejs/" rel="tag">hexo blog nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql-ef/" rel="tag">mysql ef</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/winforms-C/" rel="tag">winforms C#</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0-%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE/" rel="tag">数据库系统概述 思维导图</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">March 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/03/04/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0/">数据库系统概述</a>
+          </li>
+        
+          <li>
+            <a href="/2020/03/04/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/15/Windows-Desktop-Apps/">Windows Desktop Apps</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/14/Windows-%E7%AA%97%E4%BD%93%E4%B8%AD%E7%9A%84%E4%BA%8B%E4%BB%B6%E9%A1%BA%E5%BA%8F/">Windows 窗体中的事件顺序</a>
+          </li>
+        
+          <li>
+            <a href="/2019/03/13/DLL%E4%BD%BF%E7%94%A8%E6%A6%82%E8%BF%B0/">DLL使用概述</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 dingxuehao<br>
+      支持来自 <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+
+</html>
